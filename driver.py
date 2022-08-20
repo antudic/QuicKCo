@@ -1,30 +1,9 @@
 import os
 import sys
-import time
 import json
-import ctypes
 
 from importlib import import_module
 from pynput.keyboard import Key, Listener
-
-
-def CustomShortcut(shortcut):
-    try:
-        x = open('Shortcuts.txt')
-        location = 'Shortcuts.txt'
-    except FileNotFoundError:
-        try:
-            x = open('./Other/Shortcuts.txt')
-            location = './Other/Shortcuts.txt'
-        except FileNotFoundError:
-            location = False
-    if location is not False:
-        x = open(location, 'r')
-        y = x.read()
-        x.close()
-
-    else:
-        ctypes.windll.user32.MessageBoxW(0, "Shortcuts.txt not found. Please re-install the program.", "HFCKS", 0x10)
 
 
 class QuicKCo:
