@@ -1,0 +1,6 @@
+{
+    "eventHandler": "hidden",
+    "modules": [
+      "eval"
+    ]
+}
