@@ -18,7 +18,6 @@
 import contextlib
 import ctypes
 import itertools
-import threading
 
 from ctypes import (
     windll,
