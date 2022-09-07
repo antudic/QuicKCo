@@ -1,7 +1,13 @@
 import tkinter as tk
-from pynput.keyboard import Key
 
-def setClipboard(string, saveClipboard=True):
+def getCb(): # get clipboard
+    root = tk.Tk()
+    root.withdraw()
+
+    try: return root.clipboard_get()
+    except tk._tkinter.TclError: return ""
+
+def setCb(string, saveClipboard=True): # set clipboard
     root = tk.Tk()
     root.withdraw()
     
@@ -15,54 +21,54 @@ def setClipboard(string, saveClipboard=True):
 class EventHandler:
 
     def __init__(self):
-        self.modules = None
-        self.stop    = None
-        self.start   = None
+        self.driver    = None
 
         self.listen = False
         self.chars  = ""
         self.actionKeys = {
-            Key.pause: self.on_pause,
-            Key.enter: self.on_enter}
+            "PAUSE": self.on_pause,
+            "RETURN": self.on_enter}
 
 
-    def on_press(self, key):
+    def start(self):
+        self.driver.start()
+
+    
+    def __call__(self, key):
+        if not key["is_press"]: return
+
+        try: self.actionKeys[key["vkName"]]()
+        except KeyError: pass
+        
         if self.listen:
-            if key == Key.space:
-                self.chars+= " "
-                return
-            
-            elif key == Key.backspace:
+            if key["vkName"] == "BACK":
                 self.chars = self.chars[:-1]
                 return
-                        
-            try: self.chars+= key.char
-            except (AttributeError,
-                    TypeError): pass
 
-        try: self.actionKeys[key]()
-        except KeyError: pass
-
-            
-    @property
-    def on_release(self):
-        return None
-        # tells driver to ignore key releases
+            if key["char"]: self.chars+= key["char"]
 
 
     def on_pause(self):
         self.listen = True
+        self.driver.stop()
+        self.driver.start(suppress=True)
 
 
     def on_enter(self):
         if self.listen:
+            self.driver.stop()
+
+            self.chars = self.chars.replace("\x16", getCb())
+            
             cmdName = self.chars.split(" ")[0]
             cmdArgs = self.chars.replace(cmdName+" ", "", 1)
+            
             self.listen = False
             self.chars  = ""
 
             try:
-                if (text := self.modules[cmdName](cmdArgs)):
-                    setClipboard(text, True)
+                if (text := self.driver.modules[cmdName](cmdArgs)):
+                    setCb(text, True)
                 
-            except KeyError: return
+            except KeyError: pass
+            self.driver.start()

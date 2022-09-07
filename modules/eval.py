@@ -1,8 +1,5 @@
 import traceback
 
-
-
-
 def formatTraceback(error):
     return ''.join(traceback.format_exception(None, error, error.__traceback__))
 
@@ -10,12 +7,12 @@ def formatTraceback(error):
 class Module:
 
     def __init__(self):
-        self.name = "eval"
+        self.name    = "eval"
+        self.modules = None
 
 
     def __call__(self, args):
-        try: result = eval(args)
+        try: return eval(args)
+        
         except Exception as error:
-            result = formatTraceback(error)
-
-        return result
+            return formatTraceback(error)

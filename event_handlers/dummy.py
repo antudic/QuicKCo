@@ -1,22 +1,18 @@
 class EventHandler:
 
+
     def __init__(self):
         self.modules = None
-        self.stop    = None
-        self.start   = None
+        self.driver  = None
 
 
-    def on_press(self, key):
-        try:
-            if key.char == "q":
-                self.stop()
-                
-        except AttributeError: pass
-            
-        print(key)
+    def __call__(self, key):
+        if key["is_press"]: print(key)
+        
+        if key["char"] == "q":
+            print("Stopping :)")
+            self.driver.stop()
 
 
-    @property
-    def on_release(self):
-        # this only gets called once when initializing the listener
-        return None 
+    def start(self):
+        self.driver.start(suppress=False)

@@ -1,6 +1,7 @@
 {
-    "eventHandler": "hidden",
+    "eventHandler": "msgbox",
     "modules": [
-      "eval"
+      "eval",
+      "text"
     ]
 }

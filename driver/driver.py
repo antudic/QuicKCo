@@ -1,9 +1,9 @@
-import os
+import _listener as listener
+
 import sys
 import json
 
 from importlib import import_module
-from pynput.keyboard import Key, Listener
 
 
 class QuicKCo:
@@ -16,10 +16,13 @@ class QuicKCo:
 
         if loadConfig: self.loadConfig()
 
+        self.start = listener.start
+        self.stop  = listener.stop
+
 
     def loadConfig(self, verbose=False):
         if verbose: print("Reading config file...")
-        with open("config.json", "r") as file:
+        with open("./config.json", "r") as file:
             self.config = json.load(file)
 
         if verbose: print("Loading modules...")
@@ -28,35 +31,22 @@ class QuicKCo:
         for moduleName in self.config["modules"]:
             module = import_module(moduleName).Module()
             self.modules[module.name] = module
+            module.modules = self.modules
 
         if verbose: print("Loading event handler...")
         eventHandler = import_module(self.config["eventHandler"])
-        self.eventHandler = eventHandler.EventHandler()
+        listener.eventHandler = eventHandler.EventHandler()
         
-        self.eventHandler.modules = self.modules
-        self.eventHandler.start   = self.start
-        self.eventHandler.stop    = self.stop
+        listener.eventHandler.driver = self
         
         if verbose: print("Done.")
-
-
-    def start(self):
-        with Listener(
-                on_press=self.eventHandler.on_press,
-                on_release=self.eventHandler.on_release
-                ) as self.keyThread:
-            
-            self.keyThread.join()
-
-
-    def stop(self):
-        self.keyThread.stop()
-        
-        
 
 
 if __name__ == "__main__":
     sys.path.append("./event_handlers")
     sys.path.append("./modules")
     qkc = QuicKCo()
-    qkc.start()
+
+    print("Running in mode: " + qkc.config["eventHandler"])
+    
+    listener.eventHandler.start()
