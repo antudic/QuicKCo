@@ -1,7 +1,7 @@
 # QuicKCo
 
 QuicKCo (short for Quick Keyboard Commands) is a simple Python framework to allow users to run code based on keyboard inputs. 
-QuicKCo leverages a very modular design (the ``driver.py`` file (the only non-modular part of the code) only taking up 44 SLOC). 
+QuicKCo leverages a very modular design (the ``driver.py`` file (the only non-modular part of the code) only taking up 37 SLOC). 
 
 The general paradigm of QuicKCo is for the code to be broken up into 3 separate parts; the **Driver** code that captures the
 keyboard inputs and sends them to the selected **Event Handler** which parses the text using any method it wants to 
