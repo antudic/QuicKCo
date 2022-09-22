@@ -25,7 +25,11 @@ class Module:
     def interpreter(self, args):
         args = args.split(" ")
 
-        if len(args) == 2:
+        if len(args) == 1:
+            if args[0] in ["ls", "list"]:
+                return ", ".join(list(self.texts.keys()))
+
+        elif len(args) == 2:
 
             if args[0] == "get":
                 try: return self.texts[args[1]]
