@@ -32,6 +32,8 @@ class EventHandler:
         if key["char"] == "q":
             print("Stopping :)")
             self.driver.stop()
+            # Stops listening to keyboard events. In this EventHandler, there 
+            # is no way to start the listener again.
 
 
     def start(self):
