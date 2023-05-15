@@ -92,7 +92,6 @@ def hookFuncBlocking(nCode, wParam, lParam):
 
 def start(suppress=False):
     global hookId
-    global lpfn # does this seem redundant to you? Remove it. I dare you.
     
     if suppress: lpfn = cObjects["HOOKPROC"](hookFuncBlocking)
     else:        lpfn = cObjects["HOOKPROC"](hookFunc)
