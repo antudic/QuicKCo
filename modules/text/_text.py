@@ -39,7 +39,7 @@ class Module:
                 try: return self.texts[args[1]]
                 except KeyError: return f"no text named {args[1]}"
 
-            elif args[0] in ["del", "delete", "remove"]:
+            elif args[0] in ["del", "delete", "remove", "rem"]:
                 try: del self.texts[args[1]]
                 except KeyError: return
 
