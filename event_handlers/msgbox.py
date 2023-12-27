@@ -1,7 +1,7 @@
-import pymsgbox
+from tkinter.simpledialog import askstring as msgBoxPrompt
+from tkinter.messagebox import showinfo
 
 class EventHandler:
-
 
     def __init__(self):
         self.modules = None
@@ -11,7 +11,7 @@ class EventHandler:
     def __call__(self, key):
         if key["is_press"] and key["vkName"] == "PAUSE":
             print("asd")
-            response = pymsgbox.prompt("Enter Command")
+            response = msgBoxPrompt("QuicKCo", "Enter Command")
 
             if not response:
                 print("exiting early")
@@ -22,9 +22,9 @@ class EventHandler:
 
             try:
                 if (text := self.driver.modules[cmdName](cmdArgs)):
-                    pymsgbox.alert(
-                        text,
-                        self.driver.modules[cmdName].name
+                    showinfo(
+                        self.driver.modules[cmdName].name,
+                        text
                         )
                 
             except KeyError: pass
