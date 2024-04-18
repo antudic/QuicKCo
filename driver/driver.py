@@ -32,6 +32,7 @@ class QuicKCo:
             module = import_module(moduleName).Module()
             self.modules[module.name] = module
             module.modules = self.modules
+            if verbose: print(f"Loaded {moduleName}")
 
         if verbose: print("Loading event handler...")
         eventHandler = import_module(self.config["eventHandler"])

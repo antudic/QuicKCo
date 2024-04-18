@@ -1,4 +1,6 @@
-import pymsgbox
+try: import pymsgbox
+except ModuleNotFoundError: 
+    input("You need to install pymsgbox! Run `pip install pymsgbox`")
 
 class EventHandler:
 
@@ -31,4 +33,4 @@ class EventHandler:
 
 
     def start(self):
-        self.driver.start(suppress=False)
+        self.driver.start()
