@@ -8,4 +8,4 @@ class Module:
         # ^ this is to access other modules
 
     def __call__(self, args):
-        return time.strftime("%Y-%m-%d %H%M")
+        return time.strftime("%Y-%m-%d_%H%M")
