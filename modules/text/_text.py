@@ -28,6 +28,10 @@ class Module:
         if len(args) == 1:
             if args[0] in ["ls", "list"]:
                 return ", ".join(list(self.texts.keys()))
+            
+            else: 
+                try: return self.texts[args[1]]
+                except KeyError: return f"Unknown argument \"{args[1]}\""
 
         elif len(args) == 2:
 
@@ -57,4 +61,4 @@ class Module:
 
     def save(self):
         with open("./modules/text/texts.json", "w") as file:
-            json.dump(self.texts, file)
+            json.dump(self.texts, file, indent="    ", sort_keys=True)

@@ -14,7 +14,7 @@ If you are planning on creating your own Module or Event Handler, I suggest read
 as the ``eval.py`` Module to get a feel for how the connections between the various programs work (and are supposed to work).
 
 This framework is designed to be as unrestrictive to the developer as possible and there is nothing stopping you from chaining
-multiple Modules or Event Handlers.
+multiple Modules or Event Handlers together.
 
 The planned future of the project is to eventually have some way to browse user-submitted Event Handlers and Modules 
 but until then, I will happily accept any pull requests into this repository as long as the code is functional (and 
