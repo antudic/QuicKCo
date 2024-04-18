@@ -2,6 +2,7 @@
     "eventHandler": "msgbox",
     "modules": [
       "eval",
-      "text"
+      "text",
+      "d8str"
     ]
 }
