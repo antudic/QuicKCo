@@ -3,7 +3,7 @@ import win32
 import enum
 
 from ctypes import wintypes
-from threading import Thread
+from concurrent.futures import ThreadPoolExecutor
 
 keyTranslator = win32.KeyTranslator()
 
@@ -67,8 +67,10 @@ cObjects["GetMessage"].argtypes = (
 
 
 # CREATE HELPER FUNCTION FOR DRIVER
+executor = ThreadPoolExecutor()
+# ^ default max_workers argument is the number of processors on the machine multiplied by 5
+# ^ https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
 
-from threading import Thread
 hookId = None
 
 def parser(nCode, wParam, lParam):
@@ -83,11 +85,11 @@ def parser(nCode, wParam, lParam):
     eventHandler(key)
 
 def hookFunc(nCode, wParam, lParam):
-    Thread(target=parser, args=(nCode, wParam, lParam)).start()
+    executor.submit(parser, nCode, wParam, lParam)
     return cObjects["CallNextHookEx"](0, nCode, wParam, lParam)
 
 def hookFuncBlocking(nCode, wParam, lParam):
-    Thread(target=parser, args=(nCode, wParam, lParam)).start()
+    executor.submit(parser, nCode, wParam, lParam)
     return 1
 
 def start(suppress=False):

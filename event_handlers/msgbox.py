@@ -10,12 +10,11 @@ class EventHandler:
 
     def __call__(self, key):
         if key["is_press"] and key["vkName"] == "PAUSE":
-            print("asd")
             response = msgBoxPrompt("QuicKCo", "Enter Command")
 
             if not response:
-                print("exiting early")
                 return
+            # ^ if the string is empty (the user hit the cancel button)
             
             cmdName = response.split(" ")[0]
             cmdArgs = response.replace(cmdName+" ", "", 1)
