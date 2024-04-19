@@ -1,22 +1,4 @@
-import tkinter as tk
-
-def getCb(): # get clipboard
-    root = tk.Tk()
-    root.withdraw()
-
-    try: return root.clipboard_get()
-    except tk._tkinter.TclError: return ""
-
-def setCb(string, saveClipboard=True): # set clipboard
-    root = tk.Tk()
-    root.withdraw()
-    
-    if saveClipboard:
-        try: print(root.clipboard_get())
-        except tk._tkinter.TclError: pass
-    
-    root.clipboard_clear()
-    root.clipboard_append(string)
+from . import clipboard # local library
 
 class EventHandler:
 
@@ -58,7 +40,8 @@ class EventHandler:
         if self.listen:
             self.driver.stop()
 
-            self.chars = self.chars.replace("\x16", getCb())
+            self.chars = self.chars.replace("\x16", clipboard.get())
+            # ^ this allows user to paste from their clipboard in their "query"
             
             cmdName = self.chars.split(" ")[0]
             cmdArgs = self.chars.replace(cmdName+" ", "", 1)
@@ -68,7 +51,11 @@ class EventHandler:
 
             try:
                 if (text := self.driver.modules[cmdName](cmdArgs)):
-                    setCb(text, True)
+                    clipboard.set(text)
                 
             except KeyError: pass
+            except Exception as e:
+                print("Unexpected error in hidden EventHandler:", e)
+                # we don't want to kill the EventHandler thread if we get a module-related error
+
             self.driver.start()

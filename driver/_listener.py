@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 keyTranslator = win32.KeyTranslator()
 
 # SET UP C BINDINGS (heavily inspired by github.com/moses-palmer/pynput)
-
+# There is no real reason they are (stored as dicts and) not global variables
 
 # LowLevelKeyboardProc: https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms644985(v=vs.85)
 # UnhookWindowsHookEx: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-UnhookWindowsHookEx
