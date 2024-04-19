@@ -12,7 +12,7 @@ class Module:
 
 
     def __call__(self, args):
-        try: return eval(args)
+        try: return str(eval(args))
         
         except Exception as error:
             return formatTraceback(error)
