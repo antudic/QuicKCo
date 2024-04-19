@@ -7,8 +7,8 @@ taking up 37 SLOC).
 The general paradigm of QuicKCo is for the code to be broken up into 3 separate parts; the **Driver** code that captures the
 keyboard inputs and sends them to the selected **Event Handler** (available event handlers in this repo are `dummy`, `msgbox` and `hidden`) 
 which parses the text using any method it wants to finally make **Module** calls along with any arguments the user has sent to the Module. 
-The Module can then do things such as opening websites or getting the current temperature outside. The Event Handler also provides a 
-defualt method of returning Module reponses to the user.
+The Module can then do things such as executing python code or fetching current temperature data from an API. The Event Handler also 
+provides a default method of returning Module reponses to the user.
 
 The included Modules and Event Handlers are there to serve as guideposts as to how they're supposed to be structured.
 If you are planning on creating your own Module or Event Handler, I suggest reading the ``dummy.py`` Event Handler as well
