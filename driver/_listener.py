@@ -1,6 +1,5 @@
 import ctypes
 import win32
-import enum
 
 from ctypes import wintypes
 from concurrent.futures import ThreadPoolExecutor
