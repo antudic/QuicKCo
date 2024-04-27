@@ -29,9 +29,13 @@ class QuicKCo:
         self.modules = {}
 
         for moduleName in self.config["modules"]:
+            # load the module
             module = import_module(moduleName).Module()
             self.modules[module.name] = module
+
+            # initialize module variables
             module.modules = self.modules
+            
             if verbose: print(f"Loaded {moduleName}")
 
         if verbose: print("Loading event handler...")
